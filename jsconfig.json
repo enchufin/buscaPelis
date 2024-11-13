@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "target": "es6",
+    "module": "es6",
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
+}
