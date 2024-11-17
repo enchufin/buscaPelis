@@ -2,8 +2,8 @@
   "compilerOptions": {
     "checkJs": true,
     "target": "es6",
-    "module": "es6",
+    "module": "commonjs",
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src/**/*"]
 }
