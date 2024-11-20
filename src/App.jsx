@@ -25,26 +25,26 @@ function useSearch () {
       console.log(query)
     }
   }, [query])
-  return { query, setQuery, error, setError }
+  return { query, setQuery, error, isFirstInput: isFirstInput.current }
 }
 
 function App () {
   /* const apiKey = import.meta.env.VITE_API_KEY
   // const baseUrl = import.meta.env.VITE_BASE_API_URL
   console.log(apiKey) */
-  const { mappedPelis } = usePelis()
-  const { query, setQuery, error, setError } = useSearch()
+
+  const { query, setQuery, error, isFirstInput } = useSearch()
+  const { mappedPelis, getPelis } = usePelis({ query })
   const handleSubmit = (e) => {
     e.preventDefault()
     /* const campo = Object.fromEntries(new window.FormData(e.target)) */
-    console.log(query)
+    getPelis()
   }
 
   const handleChange = (e) => {
     const newQuery = e.target.value
-    if (newQuery.startsWith(' ')) return // Evitar que el input comience con un espacio
+    if (newQuery.startsWith(' ')) return
     setQuery(newQuery)
-    setError(null) // Limpiar el error al cambiar el valor del input
   }
 
   return (
@@ -52,10 +52,16 @@ function App () {
     <div className='container'>
       <header>
         <h1>Buscador de películas </h1>
-
         <form className='form' onSubmit={handleSubmit}>
-          <input className={`myInput ${error ? 'errorInput' : 'okInput'}`} onChange={handleChange} value={query} name='query' type='text' placeholder='Avengers, Stars Wars' />
-          <button type='submit'> Buscar </button>
+          <input
+            className={`myInput ${isFirstInput ? '' : error ? 'errorInput' : 'okInput'}`}
+            onChange={handleChange}
+            value={query}
+            name='query'
+            type='text'
+            placeholder='Avengers, Stars Wars'
+          />
+          <button type='submit'>Buscar</button>
         </form>
         {error && <p className='rojo'>{error}</p>}
       </header>

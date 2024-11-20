@@ -9,11 +9,11 @@
   margin: 0;
   padding: 0;
   display: flex;
+  justify-self: center;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 90%;
 }
 main{
   display: flex;
@@ -50,8 +50,8 @@ button:first-of-type:hover{
   list-style: none;
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
 }
 .peli{
   display: flex;
