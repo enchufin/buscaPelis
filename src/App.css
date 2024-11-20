@@ -15,6 +15,7 @@
   align-items: center;
   width: 100%;
 }
+header{margin-block-end: 2rem;}
 main{
   display: flex;
   justify-content: center;
@@ -52,6 +53,7 @@ button:first-of-type:hover{
   width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2rem;
+  grid-row-gap: 3rem;
 }
 .peli{
   display: flex;

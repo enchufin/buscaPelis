@@ -34,7 +34,7 @@ function App () {
   console.log(apiKey) */
 
   const { query, setQuery, error, isFirstInput } = useSearch()
-  const { mappedPelis, getPelis } = usePelis({ query })
+  const { respuestaPeli, getPelis } = usePelis({ query })
   const handleSubmit = (e) => {
     e.preventDefault()
     /* const campo = Object.fromEntries(new window.FormData(e.target)) */
@@ -66,7 +66,7 @@ function App () {
         {error && <p className='rojo'>{error}</p>}
       </header>
       <main>
-        <Pelis pelis={mappedPelis} />
+        <Pelis pelis={respuestaPeli} />
       </main>
     </div>
   )
