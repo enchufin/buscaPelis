@@ -29,15 +29,11 @@ function useSearch () {
 }
 
 function App () {
-  /* const apiKey = import.meta.env.VITE_API_KEY
-  // const baseUrl = import.meta.env.VITE_BASE_API_URL
-  console.log(apiKey) */
-
   const { query, setQuery, error, isFirstInput } = useSearch()
-  const { respuestaPeli, getPelis } = usePelis({ query })
+  const { pelisQuery, getPelis } = usePelis({ query })
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    /* const campo = Object.fromEntries(new window.FormData(e.target)) */
     getPelis()
   }
 
@@ -48,7 +44,6 @@ function App () {
   }
 
   return (
-
     <div className='container'>
       <header>
         <h1>Buscador de películas </h1>
@@ -66,7 +61,7 @@ function App () {
         {error && <p className='rojo'>{error}</p>}
       </header>
       <main>
-        <Pelis pelis={respuestaPeli} />
+        {pelisQuery.loading ? <h3>cargando ...</h3> : <Pelis pelisQuery={pelisQuery} />}
       </main>
     </div>
   )

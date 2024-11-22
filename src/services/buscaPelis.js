@@ -1,15 +1,11 @@
-const apiKey = import.meta.env.VITE_API_KEY
-const baseUrl = import.meta.env.VITE_BASE_API_URL
-
 export const buscaPelis = async ({ query }) => {
   if (query === '') {
     return null
   }
 
   try {
-    const response = await fetch(`${baseUrl}${apiKey}&s=${query}`)
+    const response = await fetch(`https://www.omdbapi.com/?apikey=${import.meta.env.VITE_API_KEY}&s=${query}`)
     const json = await response.json()
-    console.log(json)
     const pelis = json.Search
     return pelis?.map(peli => ({
       id: peli.imdbID,
@@ -20,6 +16,7 @@ export const buscaPelis = async ({ query }) => {
   } catch (error) {
     throw new Error('No se pudo obtener ninguna película')
   }
+}
 
 /*   if (query) {
     // setRespuestaPeli(withResults)
@@ -32,4 +29,3 @@ export const buscaPelis = async ({ query }) => {
   } else {
     setRespuestaPeli(withoutResults)
   } */
-}

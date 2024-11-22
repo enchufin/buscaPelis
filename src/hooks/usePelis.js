@@ -1,39 +1,33 @@
 import { useState } from 'react'
-/* import withResults from '../moks/result.json' */
-/* import withoutResults from '../moks/no-results.json' */
 import { buscaPelis } from '../services/buscaPelis.js'
 
-// Este hook es el encargado de mapear la respuesta de la API a un objeto con las propiedades que necesitamos
-
 export default function usePelis ({ query }) {
-  const [respuestaPeli, setRespuestaPeli] = useState([])
+  const [pelisQuery, setPelisQuery] = useState({
+    respuestaPeli: [],
+    loading: false,
+    error: null
+  })
 
   const getPelis = async () => {
-    const pelis = await buscaPelis({ query })
-    setRespuestaPeli(pelis)
-
-    /* const pelis = respuestaPeli.Search
-  const mappedPelis = pelis?.map(peli => ({
-    id: peli.imdbID,
-    titulo: peli.Title,
-    ano: peli.Year,
-    poster: peli.Poster
-  })) */
-
-    /* if (query) {
-      // setRespuestaPeli(withResults)
-      fetch(`https://www.omdbapi.com/?apikey=4a3b711b&s=${query}`)
-        .then(response => response.json())
-        .then(json => {
-          console.log(json)
-          setRespuestaPeli(json)
-        })
-    } else {
-      setRespuestaPeli(withoutResults)
-    } */
+    setPelisQuery(prevState => ({
+      ...prevState,
+      loading: true
+    }))
+    try {
+      const pelis = await buscaPelis({ query })
+      setPelisQuery({
+        respuestaPeli: pelis || [],
+        loading: false,
+        error: null
+      })
+    } catch (error) {
+      setPelisQuery({
+        respuestaPeli: [],
+        loading: false,
+        error: error.message
+      })
+    }
   }
 
-  /* Según el video tutorial retorna un objeto con la propiedad pelis que contiene mappedPelis
-  { pelis:mappedPelis } */
-  return { respuestaPeli, getPelis }
+  return { pelisQuery, getPelis }
 }

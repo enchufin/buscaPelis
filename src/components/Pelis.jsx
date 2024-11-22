@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
-/* Definicion de Typos para que el ESLint deje de quejarse,
-especificando que es un array de objetos con una estructura/forma específica */
+
 ListadoPelis.propTypes = {
   pelis: PropTypes.arrayOf(
     PropTypes.shape({
@@ -11,6 +10,7 @@ ListadoPelis.propTypes = {
     })
   ).isRequired
 }
+
 export function ListadoPelis ({ pelis }) {
   return (
     <ul className='pelis'>
@@ -18,25 +18,35 @@ export function ListadoPelis ({ pelis }) {
         <li className='peli' key={peli.id}>
           <h3>{peli.titulo}</h3>
           <p>{peli.ano}</p>
-          <img src={peli.poster} alt={`Poster de la película ${peli.Title}`} />
+          <img src={peli.poster} alt={`Poster de la película ${peli.titulo}`} />
         </li>
       ))}
     </ul>
   )
 }
+
 export function NoPelis () {
   return (
     <p>No se ha encontrado ninguna peli</p>
   )
 }
-/* Definicion de Typos para que el ESLint deje de quejarse  */
-Pelis.propTypes = {
-  pelis: PropTypes.array.isRequired
-}
-// gestionamos la lógica de gestión respuesta
-export default function Pelis ({ pelis }) {
-  const hasPelis = pelis?.length > 0
 
+Pelis.propTypes = {
+  pelisQuery: PropTypes.shape({
+    respuestaPeli: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        titulo: PropTypes.string.isRequired,
+        ano: PropTypes.string.isRequired,
+        poster: PropTypes.string.isRequired
+      })
+    ).isRequired
+  }).isRequired
+}
+
+export default function Pelis ({ pelisQuery }) {
+  const pelis = Array.isArray(pelisQuery.respuestaPeli) ? pelisQuery.respuestaPeli : []
+  const hasPelis = pelis.length > 0
   return (
     hasPelis
       ? <ListadoPelis pelis={pelis} />
